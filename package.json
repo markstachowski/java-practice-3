@@ -1,0 +1,16 @@
+{
+  "name": "java-iii-assessment",
+  "version": "0.0.1",
+  "scripts": {
+    "test": "jest"
+  },
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.3.2",
+    "jest": "^22.4.2",
+    "mysql": "^2.15.0",
+    "puppeteer": "^1.1.1",
+    "underscore": "^1.8.3"
+  }
+}

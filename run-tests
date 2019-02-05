@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+JAVA_PROJECT_DIR="$(pwd)"
+echo "Exporting JAVA_PROJECT_DIR: $JAVA_PROJECT_DIR..."
+export JAVA_PROJECT_DIR
+
+source .env.sh
+if [[ -z $DB_USER || -z $DB_PASSWORD ]] ; then
+	echo 'DB_USER or DB_PASSWORD is not set!'
+	echo 'aborting...'
+	exit 1
+fi
+export DB_USER
+export DB_PASSWORD
+
+SCRIPT_PATH="$0"
+while [[ -L $SCRIPT_PATH ]] ; do # resolve symlinks
+	SCRIPT_PATH="$(readlink $SCRIPT_PATH)"
+done
+BASE_DIR="$( cd "$( dirname "$SCRIPT_PATH" )" && pwd )"
+
+cd "$BASE_DIR" || exit 1
+
+RESULT_OUTPUT=grouped
+if [[ $1 == --chron ]] ; then
+    RESULT_OUTPUT=chron
+fi
+export RESULT_OUTPUT
+
+./node_modules/.bin/jest src/test/products.test.js
